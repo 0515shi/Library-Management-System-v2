@@ -1,5 +1,6 @@
 package shimk.library_management_system_v2.services.Impl;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,7 @@ import shimk.library_management_system_v2.services.UserService;
 
 @Service
 @Slf4j // logging
+@Transactional
 public class UserServiceImpl implements UserService {
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(); // create encode obj
@@ -24,17 +26,20 @@ public class UserServiceImpl implements UserService {
                 .email(createNewMemberReqVo.getEmail())
                 .name(createNewMemberReqVo.getName())
                 .address(createNewMemberReqVo.getAddress())
-                .membershipStart(createNewMemberReqVo.getMembershipStartDate())
-                .membershipEnd(createNewMemberReqVo.getMembershipEndDate())
+                .membershipStartDate(createNewMemberReqVo.getMembershipStartDate())
+                .membershipEndDate(createNewMemberReqVo.getMembershipEndDate())
                 .username(createNewMemberReqVo.getUsername())
                 .password(
                         bCryptPasswordEncoder.encode(createNewMemberReqVo.getPassword())
                 )
                 .status(createNewMemberReqVo.getStatus())
                 .role(createNewMemberReqVo.getRole())
+                .telno(createNewMemberReqVo.getTelno())
                 .build();
 
-        return userRepository.save(createMember); // saveto database and return saved user
+        System.out.println(createMember.getMembershipStartDate()); // ok
+
+        return userRepository.save(createMember); // save to database and return saved user
 
     }
 

@@ -19,7 +19,7 @@ public class CreateNewMemberReqVo {
     private String username;
     private String password;
     private String email;
-    private Integer telno; // phone number
+    private String telno; // phone number
     private String address;
     private UserRolesEnum role; // user role
     private UserLoginStatusEnum status; // login status

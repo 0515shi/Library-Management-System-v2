@@ -1,5 +1,6 @@
 package shimk.library_management_system_v2.domain.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -29,19 +30,21 @@ public class CreateNewMemberReqDto {
     @NotBlank(message = "email is required")
     private String email;
 
-    @NotNull(message = "Phone number is required")
-    private Integer telno; // phone number
+    @NotBlank(message = "Phone number is required")
+    private String telno; // phone number
 
     @NotNull(message = "Address is required")
     private String address;
 
-    @NotBlank(message = "Role is required")
+    @NotNull(message = "Role is required")
     private UserRolesEnum role; // user role
 
     private UserLoginStatusEnum status; // login status
 
+    @JsonProperty("membership_start")
     private LocalDateTime membershipStartDate;
 
+    @JsonProperty("membership_end")
     private LocalDateTime membershipEndDate;
 
 

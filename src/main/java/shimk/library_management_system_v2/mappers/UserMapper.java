@@ -1,6 +1,7 @@
 package shimk.library_management_system_v2.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import shimk.library_management_system_v2.domain.CreateNewMemberReqVo;
 import shimk.library_management_system_v2.domain.dtos.CreateNewMemberReqDto;
@@ -12,5 +13,7 @@ public interface UserMapper {
 
     CreateNewMemberReqVo fromDto(CreateNewMemberReqDto dto);
 
+    @Mapping(source = "membershipStartDate", target = "membershipStartDate")
+    @Mapping(source = "membershipEndDate", target = "membershipEndDate")
     CreateNewMemberResDto toDto(UserInfo userInfo); // service layer to Dto
 }

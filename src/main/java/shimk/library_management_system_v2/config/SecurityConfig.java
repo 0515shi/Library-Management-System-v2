@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints - no authentication required
-                        .requestMatchers("/", "/index", "/login", "/register", "/books/search").permitAll()
+                        .requestMatchers("/", "/index", "/login", "/books/search").permitAll()
                         // Admin only endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         // Librarian endpoints

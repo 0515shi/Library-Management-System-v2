@@ -20,7 +20,7 @@ public class CreateNewMemberResDto {
     private String username;
     private String password;
     private String email;
-    private Integer telno; // phone number
+    private String telno; // phone number
     private String address;
     private String role; // user role
     private UserLoginStatusEnum status; // login status

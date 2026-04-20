@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +22,7 @@ import shimk.library_management_system_v2.services.UserService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/v2/user")
 public class UserController {
 
     @Autowired
@@ -43,8 +43,11 @@ public class UserController {
         UserInfo createdMember = userService.createMember(createNewMemberReqVo);
         CreateNewMemberResDto createNewMemberResDto = userMapper.toDto(createdMember); // map to dto
 
+        System.out.println(createNewMemberResDto);
+
         return new ResponseEntity<>(createNewMemberResDto, HttpStatus.CREATED); // create new obj to responses
 
     }
+
 
 }

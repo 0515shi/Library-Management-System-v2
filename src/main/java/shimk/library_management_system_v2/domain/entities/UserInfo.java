@@ -53,10 +53,10 @@ public class UserInfo {
     private UserLoginStatusEnum status; // current login status
 
     @Column(name = "membership_start", nullable = false)
-    private LocalDateTime membershipStart; // start date
+    private LocalDateTime membershipStartDate; // start date
 
     @Column(name = "membership_end")
-    private LocalDateTime membershipEnd; // end date
+    private LocalDateTime membershipEndDate; // end date
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -73,11 +73,11 @@ public class UserInfo {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserInfo userInfo = (UserInfo) o;
-        return Objects.equals(id, userInfo.id) && Objects.equals(name, userInfo.name) && Objects.equals(username, userInfo.username) && Objects.equals(password, userInfo.password) && Objects.equals(email, userInfo.email) && Objects.equals(telno, userInfo.telno) && Objects.equals(address, userInfo.address) && role == userInfo.role && status == userInfo.status && Objects.equals(membershipStart, userInfo.membershipStart) && Objects.equals(membershipEnd, userInfo.membershipEnd) && Objects.equals(createdAt, userInfo.createdAt) && Objects.equals(updatedAt, userInfo.updatedAt);
+        return Objects.equals(id, userInfo.id) && Objects.equals(name, userInfo.name) && Objects.equals(username, userInfo.username) && Objects.equals(password, userInfo.password) && Objects.equals(email, userInfo.email) && Objects.equals(telno, userInfo.telno) && Objects.equals(address, userInfo.address) && role == userInfo.role && status == userInfo.status && Objects.equals(membershipStartDate, userInfo.membershipStartDate) && Objects.equals(membershipEndDate, userInfo.membershipEndDate) && Objects.equals(createdAt, userInfo.createdAt) && Objects.equals(updatedAt, userInfo.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, username, password, email, telno, address, role, status, membershipStart, membershipEnd, createdAt, updatedAt);
+        return Objects.hash(id, name, username, password, email, telno, address, role, status, membershipStartDate, membershipEndDate, createdAt, updatedAt);
     }
 }
