@@ -20,6 +20,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
+
+    @Override
     public UserInfo createMember(CreateNewMemberReqVo createNewMemberReqVo){
 
         UserInfo createMember = UserInfo.builder()
@@ -36,8 +38,6 @@ public class UserServiceImpl implements UserService {
                 .role(createNewMemberReqVo.getRole())
                 .telno(createNewMemberReqVo.getTelno())
                 .build();
-
-        System.out.println(createMember.getMembershipStartDate()); // ok
 
         return userRepository.save(createMember); // save to database and return saved user
 

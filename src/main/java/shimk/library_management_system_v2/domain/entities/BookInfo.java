@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import shimk.library_management_system_v2.domain.enums.CategoryEnum;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +36,10 @@ public class BookInfo {
     @Column(name = "publish_year", nullable = false)
     private Integer publishYear;
 
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private CategoryEnum category;
+
     @Column(name = "total_copies", nullable = false)
     private Integer totalCopies; // number of books originally
 
@@ -59,20 +64,15 @@ public class BookInfo {
     @OneToMany(mappedBy = "bookInfo", cascade = CascadeType.ALL) // parent
     private List<BookCopiesInfo> bookCopies = new ArrayList<>(); // bookCopiesInfo of the specific book
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private CategoryInfo categoryInfo;
-
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         BookInfo bookInfo = (BookInfo) o;
-        return Objects.equals(ISBN, bookInfo.ISBN) && Objects.equals(title, bookInfo.title) && Objects.equals(author, bookInfo.author) && Objects.equals(publisher, bookInfo.publisher) && Objects.equals(publishYear, bookInfo.publishYear) && Objects.equals(totalCopies, bookInfo.totalCopies) && Objects.equals(availableCopies, bookInfo.availableCopies) && Objects.equals(shelfNum, bookInfo.shelfNum) && Objects.equals(description, bookInfo.description) && Objects.equals(createdAt, bookInfo.createdAt) && Objects.equals(updatedAt, bookInfo.updatedAt);
+        return Objects.equals(ISBN, bookInfo.ISBN) && Objects.equals(title, bookInfo.title) && Objects.equals(author, bookInfo.author) && Objects.equals(publisher, bookInfo.publisher) && Objects.equals(publishYear, bookInfo.publishYear) && category == bookInfo.category && Objects.equals(totalCopies, bookInfo.totalCopies) && Objects.equals(availableCopies, bookInfo.availableCopies) && Objects.equals(shelfNum, bookInfo.shelfNum) && Objects.equals(description, bookInfo.description) && Objects.equals(createdAt, bookInfo.createdAt) && Objects.equals(updatedAt, bookInfo.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ISBN, title, author, publisher, publishYear, totalCopies, availableCopies, shelfNum, description, createdAt, updatedAt);
+        return Objects.hash(ISBN, title, author, publisher, publishYear, category, totalCopies, availableCopies, shelfNum, description, createdAt, updatedAt);
     }
 }

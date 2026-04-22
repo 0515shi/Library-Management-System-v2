@@ -16,4 +16,6 @@ public interface UserMapper {
     @Mapping(source = "membershipStartDate", target = "membershipStartDate")
     @Mapping(source = "membershipEndDate", target = "membershipEndDate")
     CreateNewMemberResDto toDto(UserInfo userInfo); // service layer to Dto
+
+
 }

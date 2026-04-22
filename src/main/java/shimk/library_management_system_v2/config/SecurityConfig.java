@@ -21,7 +21,7 @@ public class SecurityConfig {
                         // Public endpoints - no authentication required
                         .requestMatchers("/", "/index", "/login", "/books/search").permitAll()
                         // Admin only endpoints
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // get role from jwt
                         // Librarian endpoints
                         .requestMatchers("/librarian/**").hasAnyRole("ADMIN", "LIBRARIAN")
                         // Member endpoints - require authentication
@@ -29,18 +29,13 @@ public class SecurityConfig {
                         // Any other request needs authentication
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/books", true)
-                        .permitAll()
-                )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(csrf -> csrf.disable());  // Disable for testing APIs
+                .csrf(csrf -> csrf.disable());  // Disable for testing APIs, enable when using browser session cookies
 
         return http.build();
     }

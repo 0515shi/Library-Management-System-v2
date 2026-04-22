@@ -23,8 +23,8 @@ public class BookCopiesInfo {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "copy_number", nullable = false)
-    private Integer copyNumber;
+    @Column(name = "ISBN", nullable = false)
+    private String ISBN;
 
     @ManyToOne(fetch = FetchType.LAZY) // child
     @JoinColumn(name = "book_id")
@@ -36,16 +36,15 @@ public class BookCopiesInfo {
     @OneToMany(mappedBy = "bookCopy") // parent
     private List<LoanInfo> loanHistory = new ArrayList<>(); // list all loan history
 
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         BookCopiesInfo that = (BookCopiesInfo) o;
-        return Objects.equals(id, that.id) && Objects.equals(copyNumber, that.copyNumber);
+        return Objects.equals(id, that.id) && Objects.equals(ISBN, that.ISBN);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, copyNumber);
+        return Objects.hash(id, ISBN);
     }
 }

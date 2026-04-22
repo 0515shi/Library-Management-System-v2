@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shimk.library_management_system_v2.domain.CreateBookReqVo;
 import shimk.library_management_system_v2.domain.CreateNewMemberReqVo;
+import shimk.library_management_system_v2.domain.dtos.CreateBookReqDto;
+import shimk.library_management_system_v2.domain.dtos.CreateBookResDto;
 import shimk.library_management_system_v2.domain.dtos.CreateNewMemberReqDto;
 import shimk.library_management_system_v2.domain.dtos.CreateNewMemberResDto;
 import shimk.library_management_system_v2.domain.entities.UserInfo;
@@ -43,11 +46,11 @@ public class UserController {
         UserInfo createdMember = userService.createMember(createNewMemberReqVo);
         CreateNewMemberResDto createNewMemberResDto = userMapper.toDto(createdMember); // map to dto
 
-        System.out.println(createNewMemberResDto);
-
         return new ResponseEntity<>(createNewMemberResDto, HttpStatus.CREATED); // create new obj to responses
 
     }
+
+
 
 
 }
