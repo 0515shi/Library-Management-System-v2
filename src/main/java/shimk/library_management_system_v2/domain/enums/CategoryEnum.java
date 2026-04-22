@@ -1,0 +1,32 @@
+package shimk.library_management_system_v2.domain.enums;
+
+public enum CategoryEnum {
+    FICTION,
+    NON_FICTION,
+    SCIENCE,
+    TECHNOLOGY,
+    HISTORY,
+    BIOGRAPHY,
+    CHILDREN,
+    EDUCATION,
+    ART,
+    MUSIC,
+    PHILOSOPHY,
+    PSYCHOLOGY,
+    BUSINESS,
+    ECONOMICS,
+    LAW,
+    MEDICINE,
+    ENGINEERING,
+    MATHEMATICS,
+    REFERENCE,
+    RELIGION,
+    TRAVEL,
+    COOKING,
+    SPORTS,
+    POETRY,
+    DRAMA,
+    COMICS,
+    MAGAZINE,
+    JOURNAL
+}

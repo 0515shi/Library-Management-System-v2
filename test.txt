@@ -1,0 +1,33 @@
+$tokenResponse = Invoke-RestMethod -Uri "http://localhost:9090/realms/library-management-system/protocol/openid-connect/token" -Method Post -Body @{
+    grant_type = "password"
+    client_id = "library-management-system"
+    username = "admin"
+    password = "123456"
+}
+$token = $tokenResponse.access_token
+Write-Host "Token: $token" -ForegroundColor Green
+
+
+# Define the new member payload
+$newMember = @{
+    name = "John Doe"
+    email = "john@library.com"
+    username = "JohnDoe"
+    password = "secret123"
+    role = "MEMBER"
+    address = "123 Library Street"
+    telno = "11111111"
+    status = "ACTIVE"
+    membership_start = "2026-04-20T00:00:00"
+    membership_end   = "2027-04-20T00:00:00"
+} | ConvertTo-Json -Depth 3
+
+# Send the request
+$response = Invoke-RestMethod `
+    -Uri "http://localhost:8080/api/v2/user/admin/createMember" `
+    -Method Post `
+    -Headers @{Authorization = "Bearer $token"; "Content-Type" = "application/json"} `
+    -Body $newMember
+
+# Print the response
+$response | ConvertTo-Json -Depth 3
