@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserInfo, UUID> {
+    Optional<UserInfo> findById(UUID Id); // find user by userId
 }
 
 // Boot Jpa method in build, mark as DAO component

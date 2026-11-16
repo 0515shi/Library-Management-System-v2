@@ -18,6 +18,8 @@ import shimk.library_management_system_v2.domain.dtos.CreateBookReqDto;
 import shimk.library_management_system_v2.domain.dtos.CreateBookResDto;
 import shimk.library_management_system_v2.domain.dtos.CreateNewMemberReqDto;
 import shimk.library_management_system_v2.domain.dtos.CreateNewMemberResDto;
+import shimk.library_management_system_v2.domain.dtos.UpdatePasswordReqDto;
+import shimk.library_management_system_v2.domain.UpdatePasswordReqVo;
 import shimk.library_management_system_v2.domain.entities.UserInfo;
 import shimk.library_management_system_v2.mappers.UserMapper;
 import shimk.library_management_system_v2.services.UserService;
@@ -34,6 +36,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    private UUID getUserId(Jwt jwt){
+        return UUID.fromString(jwt.getSubject());
+    }
+
     @PostMapping(value = {"/admin/createMember" , "/librarian/createMember"})
     public ResponseEntity<CreateNewMemberResDto> createMember(
             @AuthenticationPrincipal Jwt jwt,
@@ -41,7 +47,7 @@ public class UserController {
     ){
 
         CreateNewMemberReqVo createNewMemberReqVo = userMapper.fromDto(createNewMemberReqDto); // dto -> reqVo
-        UUID id = UUID.fromString(jwt.getSubject()); // get user id from jwt
+        UUID id = getUserId(jwt);
 
         UserInfo createdMember = userService.createMember(createNewMemberReqVo);
         CreateNewMemberResDto createNewMemberResDto = userMapper.toDto(createdMember); // map to dto
@@ -49,6 +55,18 @@ public class UserController {
         return new ResponseEntity<>(createNewMemberResDto, HttpStatus.CREATED); // create new obj to responses
 
     }
+
+    @PostMapping(value = {"/changePassword"})
+    public ResponseEntity<CommonResDto> changePassword(
+        @AuthenticationPrincipal Jwt jwt,
+        @Valid @RequestBody UpdatePasswordReqDto updatePasswordReqDto
+    ){
+        UUID id = getUserId(jwt);
+        CommonResDto changePasswordRes = userService.changePassword(id, updatePasswordReqDto);
+        return changePasswordRes;
+    }
+
+    
 
 
 
