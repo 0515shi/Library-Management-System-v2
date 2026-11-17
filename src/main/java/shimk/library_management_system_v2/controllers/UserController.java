@@ -12,14 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import shimk.library_management_system_v2.domain.CreateBookReqVo;
 import shimk.library_management_system_v2.domain.CreateNewMemberReqVo;
-import shimk.library_management_system_v2.domain.dtos.CreateBookReqDto;
-import shimk.library_management_system_v2.domain.dtos.CreateBookResDto;
-import shimk.library_management_system_v2.domain.dtos.CreateNewMemberReqDto;
-import shimk.library_management_system_v2.domain.dtos.CreateNewMemberResDto;
-import shimk.library_management_system_v2.domain.dtos.UpdatePasswordReqDto;
-import shimk.library_management_system_v2.domain.UpdatePasswordReqVo;
+import shimk.library_management_system_v2.domain.dtos.*;
 import shimk.library_management_system_v2.domain.entities.UserInfo;
 import shimk.library_management_system_v2.mappers.UserMapper;
 import shimk.library_management_system_v2.services.UserService;
@@ -63,7 +57,7 @@ public class UserController {
     ){
         UUID id = getUserId(jwt);
         CommonResDto changePasswordRes = userService.changePassword(id, updatePasswordReqDto);
-        return changePasswordRes;
+        return new ResponseEntity<>(changePasswordRes, HttpStatus.ACCEPTED);
     }
 
     

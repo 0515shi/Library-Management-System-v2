@@ -6,10 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import shimk.library_management_system_v2.domain.CreateNewMemberReqVo;
+import shimk.library_management_system_v2.domain.dtos.CommonResDto;
 import shimk.library_management_system_v2.domain.dtos.UpdatePasswordReqDto;
 import shimk.library_management_system_v2.domain.entities.UserInfo;
 import shimk.library_management_system_v2.repositories.UserRepository;
 import shimk.library_management_system_v2.services.UserService;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j // logging
@@ -46,7 +51,8 @@ public class UserServiceImpl implements UserService {
 
     @Override 
     public CommonResDto changePassword(UUID id, UpdatePasswordReqDto updatePasswordReqDto){
-        UserInfo existingUser = UserRepository.findById(id);
+        UserInfo existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         CommonResDto commonResDto = new CommonResDto();
         commonResDto.setStatus("FAIL"); // Default: FAIL
         
@@ -54,20 +60,18 @@ public class UserServiceImpl implements UserService {
         String userInputCurrPass = bCryptPasswordEncoder.encode(updatePasswordReqDto.getCurrPass());
         String newPass = bCryptPasswordEncoder.encode(updatePasswordReqDto.getNewPass());
         String confPass = bCryptPasswordEncoder.encode(updatePasswordReqDto.getConfPass());
-        
-        if(existingUser == null){
-            commonResDto.setErrMsg("User does not exist.");
-            return commonResDto;
-        }
-        if(newPass != confPass){
+
+        if(!Objects.equals(newPass, confPass)){
             commonResDto.setErrMsg("New Password has to be identical as the Confirm Password.");
             return commonResDto;
         }
-        if(userCurrPass != userInputCurrPass){
+        if(!Objects.equals(userCurrPass, userInputCurrPass)){
             commonResDto.setErrMsg("Current Password is incorrect. Please check and retry.");
         }
 
         existingUser.setPassword(newPass);
+        userRepository.save(existingUser); // update user in database
+
         commonResDto.setStatus("SUCCESS");
         commonResDto.setErrMsg(null);
         return commonResDto;

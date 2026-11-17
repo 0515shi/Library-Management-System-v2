@@ -40,11 +40,4 @@ public class CreateBookReqDto {
 
     private String description;
 
-
-
-
-
-
-
-
 }
